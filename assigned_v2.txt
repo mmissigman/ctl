@@ -1,0 +1,72 @@
+Title: Idaho Indigency Calculator
+Author: Michelle Missigman
+Before:<link rel="stylesheet" type="text/css" href="https://suffolklitlab.org/howto/qna/style/style.css">
+<div id="icon" style="background-size: 110px 99px;background-image: url('https://suffolklitlab.org/howto/qna/images/maxheadroom.gif');"></div>
+<h2 style="text-align:center;">Idaho Indigency Calculator</h2>
+<p><b>This is a <a href="http://www.codingthelaw.org/">class project</a>. You should not rely on it as a source of legal information. It is likely incomplete.</b></p>
+<p>Answer the following questions to see if someone qualifies for appointment of counsel.</p>
+After:
+<script>
+function fedpov(house,income,percentage){
+	// Determines if your income is less than or equal to 
+	// a percentage of the 2018 federal poverty guidelines 
+	// for the contiguous United States. See
+	// https://www.federalregister.gov/documents/2018/01/18/2018-00814/annual-update-of-the-hhs-poverty-guidelines
+	
+		var line = NaN;
+	
+		if (house == 1) {
+			line = 12140;
+		} else if (house == 2) {
+			line = 16460;
+		} else if (house == 3) {
+			line = 20780;
+		} else if (house == 4) {
+			line = 25100;
+		} else if (house == 5) {
+			line = 29420;
+		} else if (house == 6) {
+			line = 33740;
+		} else if (house == 7) {
+			line = 38060;
+		} else if (house == 8) {
+			line = 42380;
+		} else if (house > 8) {
+			line = 42380 + (house-8)*4320;
+		}
+	
+		if (income <= (line*(percentage/100))) {
+			return true;
+		} else {
+			return false;
+		}
+	}	
+</script>	
+
+
+Q(1): Can your client afford full payment of an attorney and all other necessary expenses of representation?
+A: Yes
+	Q(1.1): The State will not appoint counsel.
+A: No
+	Q(1.2): Is your client receiving public assistance? This includes food assistance, health coverage, cash assistance, or childcare assistance. (Participating in the Idaho health insurance exchange does not count)
+	A: Yes
+		Q(1.2.1):GOTO:counsel
+	A: No
+		Q(1.2.2):  Is your client currently receiving a sentence in a correctional facility or being housed in a mental health facility?
+		A: Yes
+			Q(1.2.2.1):GOTO:counsel
+		A: No
+			Q(1.2.2.2):GOTO:house
+
+Q(house): How many people are in your household?
+X:number
+	Q(income): How much income does your household bring in per year after tax dollars?
+	X:number
+		Q(2.1.1): Click below to calculate your answer
+		A[javascript:if (fedpov(getvar('house'),getvar('income'),187)){ goto('counsel') } else { goto('nocounsel') } ]: Click
+
+Q(nocounsel): The State will not presume that your client is indigent and your client will have to go to court in order to prove that they are indigent under Idaho Code § 19-854 in order to be appointed counsel by the State. Your client may still qualify for counsel if the court determines that your client is indigent based on the extent of their inability to pay. In determining whether a person is indigent, the court will consider: income, property owned, outstanding obligations, the number and ages of their dependents, and the cost of bail. GOTO:5
+
+Q(counsel): Your client is presumed indigent according to Idaho Code § 19-854 and the State will appoint counsel. GOTO:5
+
+Q(5): If your client is found to be indigent, they may also be eligible to waive their Civil Court fees, as defined in Idaho Code § 31-3220. Your client must submit an affidavit stating that they are indigent and are unable to pay fees, costs or give security. The affidavit must also contain: the person's identity, the nature and amount of income, spouse's income (if applicable), real and personal property owned, cash or checking account, dependents, debts, monthly expenses, nature of the action, and your client's belief that he is entitled to compensation.
