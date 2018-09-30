@@ -41,7 +41,10 @@ function fedpov(house,income,percentage){
 			return false;
 		}
 	}	
-</script>	
+</script>
+
+Before: <input type="hidden" name="printcounsel" value="printcounsel"/>
+<input type="hidden" name="docx_uri" value="https://mmissigman.github.io/ctl/IndigencyCalc.Counsel.docx"/>
 
 
 Q(1): Can your client afford full payment of an attorney and all other necessary expenses of representation?
@@ -62,8 +65,13 @@ Q(house): How many people are in your household?
 X:number
 	Q(income): How much income does your household bring in per year after tax dollars?
 	X[javascript:if (fedpov(getvar('house'),getvar('income'),187)){ goto('counsel') } else { goto('nocounsel') } ]:number
-Q(nocounsel): The State will not presume that your client is indigent and your client will have to go to court in order to prove that they are indigent under Idaho Code § 19-854 in order to be appointed counsel by the State. Your client may still qualify for counsel if the court determines that your client is indigent based on the extent of their inability to pay. In determining whether a person is indigent, the court will consider: income, property owned, outstanding obligations, the number and ages of their dependents, and the cost of bail. GOTO:5
+Q(counsel): Your client is presumed indigent according to Idaho Code § 19-854 and the State will appoint counsel. GOTO:printcounsel
 
-Q(counsel): Your client is presumed indigent according to Idaho Code § 19-854 and the State will appoint counsel. GOTO:5
+Q(printcounsel): Would you like to print out your results?
+A:[javascript:submit2('http://colarusso.pythonanywhere.com/','GET','','','','json_doc','_blank')] Yes
+	
 
-Q(5): If your client is found to be indigent, they may also be eligible to waive their Civil Court fees, as defined in Idaho Code § 31-3220. Your client must submit an affidavit stating that they are indigent and are unable to pay fees, costs or give security. The affidavit must also contain: the person's identity, the nature and amount of income, spouse's income (if applicable), real and personal property owned, cash or checking account, dependents, debts, monthly expenses, nature of the action, and your client's belief that he is entitled to compensation.
+Q(nocounsel): The State will not presume that your client is indigent and your client will have to go to court in order to prove that they are indigent under Idaho Code § 19-854 in order to be appointed counsel by the State. GOTO:????
+
+Q(printnocounsel): Would you like to print out your results?
+A:[javascript:submit2('http://colarusso.pythonanywhere.com/','GET','','','','json_doc','_blank')] Yes
