@@ -2,11 +2,7 @@ Title: Idaho Indigency Calculator
 Author: Michelle Missigman
 Before:<link rel="stylesheet" type="text/css" href="https://suffolklitlab.org/howto/qna/style/style.css">
 
-<input type="hidden" name="printnocounsel" value="printnocounsel"/>
-<input type="hidden" name="docx_uri" value="https://mmissigman.github.io/ctl/IndigencyCalc.Nocounsel.docx"/>
-
-<input type="hidden" name="printcounsel" value="printcounsel"/>
-<input type="hidden" name="docx_uri" value="https://mmissigman.github.io/ctl/IndigencyCalc.Counsel.docx"/> 
+<input type="hidden" name="name" value="IndigencyCalcSummary"/>
 
 <div id="icon" style="background-size: 110px 99px;background-image: url('https://suffolklitlab.org/howto/qna/images/maxheadroom.gif');"></div>
 <h2 style="text-align:center;">Idaho Indigency Calculator</h2>
@@ -70,10 +66,10 @@ X:number
 	X[javascript:if (fedpov(getvar('house'),getvar('income'),187)){ goto('counsel') } else { goto('nocounsel') } ]:number
 Q(nocounsel): The State will not presume that your client is indigent and your client will have to go to court in order to prove that they are indigent under Idaho Code § 19-854 in order to be appointed counsel by the State. GOTO:printnocounsel
 
-Q(printnocounsel): Would you like to print out your results?
+Q(printnocounsel):<input type="hidden" name="docx_uri" value="https://mmissigman.github.io/ctl/IndigencyCalc.Nocounsel.docx"/> Would you like to print out your results?
 A:[javascript:submit2('http://colarusso.pythonanywhere.com/','GET','','','','json_doc','_blank')] Yes
 
 Q(counsel): Your client is presumed indigent according to Idaho Code § 19-854 and the State will appoint counsel. GOTO:printcounsel
 
-Q(printcounsel): Would you like to print out your results?
+Q(printcounsel):<input type="hidden" name="docx_uri" value="https://mmissigman.github.io/ctl/IndigencyCalc.Counsel.docx"/> Would you like to print out your results?
 A:[javascript:submit2('http://colarusso.pythonanywhere.com/','GET','','','','json_doc','_blank')] Yes
